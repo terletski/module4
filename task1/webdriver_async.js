@@ -1,7 +1,7 @@
-var webdriver = require("selenium-webdriver");
+const webdriver = require("selenium-webdriver");
 
 function createDriver() {
-    var driver = new webdriver.Builder()
+    const driver = new webdriver.Builder()
         .usingServer('http://localhost:4444/wd/hub')
         .withCapabilities(webdriver.Capabilities.chrome())
         .build();
@@ -9,35 +9,17 @@ function createDriver() {
     return driver;
 }
 
-var browser = createDriver();
+const browser = createDriver();
 
-function logTitle() {
-    browser.getTitle().then(function (title) {
-        console.log('Current Page Title: ' + title);
-    });
-}
-
-
-function logQuestionTitle() {
-    browser.findElement(webdriver.By.css("#question-header h1")).then(function (el) {
-        el.getText().then(function (text) {
-            console.log('Current Question Title: ' + text)
-        });
-    });
-}
-
-function clickLink(link) {
-    link.click();
-}
 
 function handleFailure(err) {
     console.error('Something went wrong\n', err.stack, '\n');
     closeBrowser();
 }
 
-function findMostRelevant() {
-    return browser.findElements(webdriver.By.css('.result-link a')).then(function (result) {
-        return result[0];
+function findResult() {
+    browser.findElements(webdriver.By.css('#serverSideDataTable_info')).then(function (result) {
+            console.log('Result: ' + result[1])
     });
 }
 
@@ -45,14 +27,16 @@ function closeBrowser() {
     browser.quit();
 }
 
-browser.get('https://stackoverflow.com/');
-browser.findElement(webdriver.By.name('q')).sendKeys('webdriverjs');
-browser.findElement(webdriver.By.xpath("//button[@type='submit']")).click();
+browser.get('https://www.copart.com/');
+browser.findElement(webdriver.By.css("a[data-uname='homePageFindAVehicle']")).click();
+// browser.findElement(webdriver.By.css("a[data-uname='vehicleFinderTab']")).click();
+browser.findElement(webdriver.By.id("input-search")).sendKeys('Ferrari');
+browser.findElement(webdriver.By.className("btn btn-lightblue marginleft15")).click();
 
-browser.wait(findMostRelevant, 2000)
-    .then(clickLink)
-    .then(logTitle)
-    .then(logQuestionTitle)
+browser.wait(findResult, 3000)
+    // .then(clickLink)
+    // .then(getRequest)
+    // .then(logQuestionTitle)
     .then(closeBrowser, handleFailure);
 
 
