@@ -1,4 +1,5 @@
 const webdriver = require("selenium-webdriver");
+const until = require("selenium-webdriver");
 
 function createDriver() {
     const driver = new webdriver.Builder()
@@ -66,7 +67,7 @@ browser.get('https://kinogo.by/').then(() => {
 }).then(() => {
     return addToBookmarks();
 }).then(() => {
-    return searchByTitle('Луна');
+    return browser.wait(searchByTitle('Луна'), 1000);
 }).then(() => {
     closeBrowser();
 }).catch((err) => {
