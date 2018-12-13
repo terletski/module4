@@ -1,0 +1,16 @@
+{
+  "name": "M4.1_protractor",
+  "version": "1.0.0",
+  "main": "spec.js",
+  "dependencies": {
+    "protractor": "^5.4.1"
+  },
+  "scripts": {
+    "prestart-webdriver": "webdriver-manager update",
+    "start-webdriver": "webdriver-manager start",
+    "protractor": "protractor conf.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
