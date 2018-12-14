@@ -1,12 +1,12 @@
 {
-  "name": "example1",
+  "name": "kinogo.by",
   "version": "1.0.0",
   "description": "",
-  "main": "demo1.js",
+  "main": "webdriver_async.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Yauheni Tsiarletski",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.10.0",
