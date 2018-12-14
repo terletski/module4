@@ -1,52 +1,43 @@
 // spec.js
-describe('angularjs homepage', function() {
-  var firstNumber = element(by.model('first'));
-  var secondNumber = element(by.model('second'));
-  var goButton = element(by.id('gobutton'));
-  var latestResult = element(by.binding('latest'));
-  var history = element.all(by.repeater('result in memory'));
-  
-  function add(a,b) {
-    firstNumber.sendKeys(a);
-    secondNumber.sendKeys(b);
-    goButton.click();
+const url = 'https://onefootball.com/en/home'
+
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
+
+describe('swich language', function() {
+  const switchLanguageMenu = element(by.css('span[class="market-selector-title d-none d-lg-block cursor-pointer h5 m-none"]'));
+  const languageDe = element(by.css('img[src="/assets/img/market-selector/de.png?rev=ae293a42"]'));
+  const currentLanguage = element(by.css('span[class="market-selector-title d-none d-lg-block cursor-pointer h5 m-none"]'));
+
+  function switchLanguage() {
+    switchLanguageMenu.click();
+    languageDe.click();
   }
   
   beforeEach(function() {
-    browser.get('https://onefootball.com/en/home');
+    browser.get(url);
   });
   
-  it('should have a history', function() {
-    add(1,2);
-    add(3,4);
-    
-    expect(history.count()).toEqual(2);
-    
-    add(5,6);
-    
-    expect(history.count()).toEqual(3);
-    
-    expect(history.last().getText()).toContain('1 + 2');
-    expect(history.first().getText()).toContain('5 + 6');
-  });
-  
-  it('should have a title', function() {
-    expect(browser.getTitle()).toEqual('Super Calculator');
+  it('should switch to Deutschland', function() {
+    switchLanguage();
+    expect(currentLanguage.getText()).toEqual('Deutschland');
+  });     
+});
+
+describe('swich language', function() {
+  const searchForm = element(by.className('header-search-input flex-grow-1 flex-shrink-0 text-sm ng-untouched ng-pristine ng-valid'));
+  const searchButton = element(by.className('header-search-button p-0 m-0 d-flex flex-row align-items-center flex-grow-0 flex-shrink-0 border-0 noselect'));
+
+  function searchByLeague(league) {
+    searchForm.sendKeys(league);
+    searchButton.click();  
+  }
+
+  beforeEach(function() {
+    browser.get(url);
   });
 
-  it('should add one and two', function(){
-    firstNumber.sendKeys(1);
-    secondNumber.sendKeys(2);
-    
-    goButton.click();
-    
-    expect(latestResult.getText()).toEqual('3');
-  });
-  
-  it('should add four and six', function() {
-    firstNumber.sendKeys('4');
-    secondNumber.sendKeys('6');
-    goButton.click();
-    expect(latestResult.getText()).toEqual('10');
-  });
-});
+  it('should search Premier League', function() {
+    searchByLeague('Premier League');
+    expect(browser.getTitle()).toContain('Onefootball');
+  }); 
+}); 

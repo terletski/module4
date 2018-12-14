@@ -1,5 +1,5 @@
 {
-  "name": "M4.1_protractor",
+  "name": "onefootball.com",
   "version": "1.0.0",
   "main": "spec.js",
   "dependencies": {
@@ -10,7 +10,7 @@
     "start-webdriver": "webdriver-manager start",
     "protractor": "protractor conf.js"
   },
-  "author": "",
+  "author": "Yauheni Tsiarletski",
   "license": "ISC",
   "description": ""
 }
