@@ -112,10 +112,10 @@ describe('Table champions league page', () => {
   });
 });
 // non-angular https://kinogo.by/
-describe('Table champions league page', () => {
+describe('Kinogo page', () => {
 
   beforeEach(() => {
-    browser.get(tableChampionsLeaguePage);
+    browser.get(kinogo);
   });
 
   it('should get current table', () => {
