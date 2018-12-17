@@ -18,7 +18,7 @@ function handleFailure(err) {
 }
 
 async function signIn(login, password) {
-    await browser.findElement(webdriver.By.linkText('Вход')).click()
+    await browser.findElement(webdriver.By.linkText('Вход')).click();
     await browser.findElement(webdriver.By.id('login_name')).sendKeys(login);
     await browser.findElement(webdriver.By.id('login_password')).sendKeys(password);
     return await browser.findElement(webdriver.By.css('button[title="Войти"]')).click();
@@ -38,7 +38,7 @@ async function addToBookmarks() {
 }
 
 async function searchByTitle(text) {
-    await browser.findElement(webdriver.By.id('story')).sendKeys(text)
+    await browser.findElement(webdriver.By.id('story')).sendKeys(text);
     await browser.findElement(webdriver.By.css('button.fbutton2')).click();
     return await browser.findElement(webdriver.By.css('h2.zagolovki')).getText().then((result) => {
         console.log(result);
