@@ -1,43 +1,112 @@
 // spec.js
-const url = 'https://onefootball.com/en/home'
+const homePage = 'https://onefootball.com/en/home';
+const championsLeaguePage = 'https://onefootball.com/en/competition/champions-league-5';
+const matchesChampionsLeaguePage = 'https://onefootball.com/en/competition/champions-league-5/matches';
+const tableChampionsLeaguePage = 'https://onefootball.com/en/competition/champions-league-5/table';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
-describe('swich language', function() {
+describe('home page', function () {
   const switchLanguageMenu = element(by.css('span[class="market-selector-title d-none d-lg-block cursor-pointer h5 m-none"]'));
   const languageDe = element(by.css('img[src="/assets/img/market-selector/de.png?rev=ae293a42"]'));
-  const currentLanguage = element(by.css('span[class="market-selector-title d-none d-lg-block cursor-pointer h5 m-none"]'));
+  const searchForm = element(by.className('header-search-input flex-grow-1 flex-shrink-0 text-sm ng-untouched ng-pristine ng-valid'));
+  const searchButton = element(by.className('header-search-button p-0 m-0 d-flex flex-row align-items-center flex-grow-0 flex-shrink-0 border-0 noselect'));
 
   function switchLanguage() {
     switchLanguageMenu.click();
     languageDe.click();
   }
-  
-  beforeEach(function() {
-    browser.get(url);
-  });
-  
-  it('should switch to Deutschland', function() {
-    switchLanguage();
-    expect(currentLanguage.getText()).toEqual('Deutschland');
-  });     
-});
-
-describe('swich language', function() {
-  const searchForm = element(by.className('header-search-input flex-grow-1 flex-shrink-0 text-sm ng-untouched ng-pristine ng-valid'));
-  const searchButton = element(by.className('header-search-button p-0 m-0 d-flex flex-row align-items-center flex-grow-0 flex-shrink-0 border-0 noselect'));
 
   function searchByLeague(league) {
     searchForm.sendKeys(league);
-    searchButton.click();  
+    searchButton.click();
   }
 
-  beforeEach(function() {
-    browser.get(url);
+  function searchLatestNewshByTeam(team) {
+    searchForm.sendKeys(team);
+    searchButton.click();
+  }
+
+  beforeEach(function () {
+    browser.get(homePage);
   });
 
-  it('should search Premier League', function() {
+  it('should switch to Deutschland', function () {
+    const currentLanguage = element(by.css('span[class="market-selector-title d-none d-lg-block cursor-pointer h5 m-none"]'));
+    switchLanguage();
+    expect(currentLanguage.getText()).toEqual('Deutschland');
+  });
+
+  it('should search Premier League', function () {
     searchByLeague('Premier League');
     expect(browser.getTitle()).toContain('Onefootball');
-  }); 
-}); 
+  });
+
+  it('should search latest news', function () {
+    const latestNews = element(by.className('of-card-article rounded overflow-hidden bg-gray-lightest text-gray-dark'));
+    searchLatestNewshByTeam('Liverpool');
+    expect(latestNews.isDisplayed()).toBe(true);
+  });
+
+  it('should search latest news', function () {
+    const popularPage = element(by.className('col-24 text-gray-dark'));
+    expect(popularPage.getText()).toEqual('Popular Pages');
+  });
+});
+
+describe('champions league page', function () {
+
+  beforeEach(function () {
+    browser.get(championsLeaguePage);
+  });
+
+  it('should get current title', function () {
+    expect(browser.getTitle()).toContain('Champions League - Onefootball');
+  });
+
+  it('should get current result of match', function () {
+    const result = element(by.css('span.flex-grow-0'));
+    browser.get(matchesChampionsLeaguePage);
+    expect(result.getText()).toEqual(':');
+  });
+});
+
+describe('Matches champions league page', function () {
+
+  beforeEach(function () {
+    browser.get(matchesChampionsLeaguePage);
+  });
+
+  it('should get current result of match', function () {
+    const result = element(by.css('span.flex-grow-0'));
+    expect(result.getText()).toEqual(':');
+  });
+
+  it('should get a table with the match participants', function () {
+    const lastMatch = element(by.className('d-block text-gray-darker bg-white rounded p-xs'));
+    lastMatch.click();
+    browser.wait(() => {
+      browser.waitForAngularEnabled(false);
+      return browser.isElementPresent(by.className('h4 text-uppercase text-center text-lg-left mb-xlg mt-none'));
+  }, 5000); 
+    const table = element(by.className('h4 text-uppercase text-center text-lg-left mb-xlg mt-none'));
+    expect(table.getText()).toContain('table');
+  });
+});
+
+describe('Table champions league page', function () {
+
+  beforeEach(function () {
+    browser.get(tableChampionsLeaguePage);
+  });
+
+  it('should get current table', function () {
+    const result = element(by.css('h2.h2.p-0.mb-lg'));
+    expect(result.getText()).toEqual('Table');
+  });
+
+  it('should get counts of tables', function () {
+    const count = element.all(by.css('li.d-block.pt-0.pb-0.mb-0.mt-0.flex-grow-1'));
+    expect(count.count()).toBe(8);
+  });
+});
