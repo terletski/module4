@@ -25,7 +25,7 @@ async function signIn(login, password) {
 }
 
 async function sortByDatePremieres() {
-    await browser.findElement(webdriver.By.linkText('дате')).click()
+    await browser.findElement(webdriver.By.linkText('дате')).click();
     return await browser.findElement(webdriver.By.css('h2.zagolovki')).getText().then((title) => {
         console.log('The most recent film: ' + title);
     });
