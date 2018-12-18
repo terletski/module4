@@ -2,7 +2,6 @@ const webdriver = require("selenium-webdriver");
 const until = webdriver.until;
 const homePage = 'https://kinogo.by/';
 
-
 function createDriver() {
     const driver = new webdriver.Builder()
         .usingServer('http://localhost:4444/wd/hub')
@@ -20,8 +19,11 @@ function handleFailure(err) {
     closeBrowser();
 }
 
-async function signIn(login, password) {
+function openPage() {
     browser.get(homePage);
+}
+
+async function signIn(login, password) {
     await browser.findElement(webdriver.By.linkText('Вход')).click();
     await browser.findElement(webdriver.By.id('login_name')).sendKeys(login);
     await browser.findElement(webdriver.By.id('login_password')).sendKeys(password);
@@ -61,6 +63,7 @@ function closeBrowser() {
 
 module.exports = {
     handleFailure,
+    openPage,
     signIn,
     sortByDatePremieres,
     addToBookmarks,

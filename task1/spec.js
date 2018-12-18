@@ -5,6 +5,14 @@ const expect = chai.expect;
 
 describe('Test Kinogo.by', () => {
 
+    beforeEach(() => {
+        webdriver.openPage();
+    })
+
+    afterEach(() => {
+        webdriver.closeBrowser();
+    })
+
     it('should get info from Kinogo.by', async () => {
         await webdriver.signIn('eugene89', 'eugene89').then(currentLogin => {
             expect(currentLogin).to.equal('eugene89');
@@ -21,6 +29,5 @@ describe('Test Kinogo.by', () => {
         await webdriver.editProfile('eugene89').then(info => {
             expect(info).to.equal('eugene89');
         })
-        webdriver.closeBrowser();
     })
 })
