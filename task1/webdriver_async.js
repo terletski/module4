@@ -46,10 +46,13 @@ async function searchByTitle(text) {
     return await browser.findElement(webdriver.By.css('h2.zagolovki')).getText();
 }
 
-async function searchByTitle(text) {
-    await browser.findElement(webdriver.By.id('story')).sendKeys(text);
-    await browser.findElement(webdriver.By.css('button.fbutton2')).click();
-    return await browser.findElement(webdriver.By.css('h2.zagolovki')).getText();
+async function editProfile(info) {
+    await browser.findElement(webdriver.By.id('logbtn')).click();
+    await browser.findElement(webdriver.By.linkText('редактировать профиль')).click();
+    await browser.wait(until.elementLocated(webdriver.By.css('td > textarea[name="info"]')), 10000).clear();
+    await browser.findElement(webdriver.By.css('td > textarea[name="info"]')).sendKeys(info);
+    await browser.findElement(webdriver.By.css('input[value="Сохранить"]')).click();  
+    return await browser.findElement(webdriver.By.css('#userinfo > div > b:nth-child(3)')).getText();
 }
 
 function closeBrowser() {
@@ -62,5 +65,6 @@ module.exports = {
     sortByDatePremieres,
     addToBookmarks,
     searchByTitle,
+    editProfile,
     closeBrowser
 }
