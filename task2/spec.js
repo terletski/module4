@@ -113,18 +113,25 @@ describe('Table champions league page', () => {
 });
 // non-angular https://kinogo.by/
 describe('Kinogo page', () => {
-
+ 
   beforeEach(() => {
+    browser.waitForAngularEnabled(false);
     browser.get(kinogo);
   });
 
-  it('should get current table', () => {
-    const result = element(by.css('h2.h2.p-0.mb-lg'));
-    expect(result.getText()).toEqual('Table');
+  it('should log in', () => {
+    element(by.linkText('Вход')).click();
+    element(by.id('login_name')).sendKeys('eugene89');
+    element(by.id('login_password')).sendKeys('eugene89');
+    element(by.css('button[title="Войти"]')).click();
+    const login = element(by.id('logbtn'));
+    expect(login.getText()).toEqual('eugene89');
   });
 
-  it('should get counts of tables', () => {
-    const count = element.all(by.css('li.d-block.pt-0.pb-0.mb-0.mt-0.flex-grow-1'));
-    expect(count.count()).toBe(8);
+  it('should get title by searching movies', () => {
+    element(by.id('story')).sendKeys('Во все тяжкие');
+    element(by.css('button.fbutton2')).click();
+    const title = element(by.css('h2.zagolovki'));
+    expect(title.getText()).toContain('Во все тяжкие');
   });
 });
