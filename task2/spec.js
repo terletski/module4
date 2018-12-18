@@ -1,4 +1,3 @@
-// spec.js
 const homePage = 'https://onefootball.com/en/home';
 const championsLeaguePage = 'https://onefootball.com/en/competition/champions-league-5';
 const matchesChampionsLeaguePage = 'https://onefootball.com/en/competition/champions-league-5/matches';
@@ -84,10 +83,9 @@ describe('Matches champions league page', () => {
   });
 
   it('should get a table with the match participants', () => {
-    const lastMatch = element(by.className('d-block text-gray-darker bg-white rounded p-xs'));
+    const lastMatch = element(by.className('match-card d-flex flex-column w-100 justify-content-start align-items-top'));
     lastMatch.click();
     browser.wait(() => {
-      browser.waitForAngularEnabled(false);
       return browser.isElementPresent(by.className('h4 text-uppercase text-center text-lg-left mb-xlg mt-none'));
     }, 5000);
     const table = element(by.className('h4 text-uppercase text-center text-lg-left mb-xlg mt-none'));
@@ -102,7 +100,7 @@ describe('Table champions league page', () => {
   });
 
   it('should get current table', () => {
-    const result = element(by.css('h2.h2.p-0.mb-lg'));
+    const result = element(by.className('h2 p-0 mb-lg'));
     expect(result.getText()).toEqual('Table');
   });
 
