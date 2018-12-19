@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "spec.js",
   "dependencies": {
+    "esformatter": "^0.10.0",
     "protractor": "^5.4.1"
   },
   "scripts": {

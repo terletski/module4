@@ -105,7 +105,7 @@ describe('Table champions league page', () => {
 });
 // non-angular https://kinogo.by/
 describe('Kinogo page', () => {
- 
+
   beforeEach(() => {
     browser.waitForAngularEnabled(false);
     browser.get(kinogo);
