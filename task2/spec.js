@@ -77,11 +77,12 @@ describe('Matches champions league page', () => {
   });
 
   it('should check the table with the match participants', () => {
-    const lastMatch = element(by.className('match-card d-flex'));
-    lastMatch.click();
-    browser.wait(() => {
-      return browser.isElementPresent(by.className('h4 text-uppercase text-center'));
-    }, 5000);
+    browser.executeScript(`
+    element = document.querySelector('.d-block.text-gray-darker');
+    element.click();
+    `);
+    const until = protractor.ExpectedConditions;
+    browser.wait(until.urlContains('period'), 5000);
     const table = element(by.className('h4 text-uppercase text-center'));
     expect(table.getText()).toContain('table', 'Incorrect table');
   });
@@ -103,7 +104,7 @@ describe('Table champions league page', () => {
     expect(count.count()).toBe(8, 'Incorrect counts of tables');
   });
 });
-// non-angular https://kinogo.by/
+non - angular https://kinogo.by/
 describe('Kinogo page', () => {
 
   beforeEach(() => {
