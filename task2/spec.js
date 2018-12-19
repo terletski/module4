@@ -7,10 +7,10 @@ const kinogo = 'https://kinogo.by/';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
 describe('home page', () => {
-  const switchLanguageMenu = element(by.css('span[class="market-selector-title d-none d-lg-block cursor-pointer h5 m-none"]'));
-  const languageDe = element(by.css('img[src="/assets/img/market-selector/de.png?rev=ae293a42"]'));
-  const searchForm = element(by.className('header-search-input flex-grow-1 flex-shrink-0 text-sm ng-untouched ng-pristine ng-valid'));
-  const searchButton = element(by.className('header-search-button p-0 m-0 d-flex flex-row align-items-center flex-grow-0 flex-shrink-0 border-0 noselect'));
+  const switchLanguageMenu = element(by.css('span[class*="market"]'));
+  const languageDe = element(by.css('img[alt="de"]'));
+  const searchForm = element(by.className('header-search-input flex'));
+  const searchButton = element(by.className('button[class*="header-search"]'));
 
   switchLanguage = () => {
     switchLanguageMenu.click();
@@ -32,25 +32,25 @@ describe('home page', () => {
   });
 
   it('should switch to Deutschland', () => {
-    const currentLanguage = element(by.css('span[class="market-selector-title d-none d-lg-block cursor-pointer h5 m-none"]'));
+    const currentLanguage = element(by.css('span[class*="market"]'));
     switchLanguage();
-    expect(currentLanguage.getText()).toEqual('Deutschland');
+    expect(currentLanguage.getText()).toEqual('Deutschland', 'Switch to Deutschland failed');
   });
 
   it('should search Premier League', () => {
     searchByLeague('Premier League');
-    expect(browser.getTitle()).toContain('Onefootball');
+    expect(browser.getTitle()).toContain('Onefootball', 'Search by premier league failed');
   });
 
-  it('should search latest news', () => {
-    const latestNews = element(by.className('of-card-article rounded overflow-hidden bg-gray-lightest text-gray-dark'));
+  it('should check to search latest news', () => {
+    const latestNews = element(by.className('a[class*="of"]'));
     searchLatestNewshByTeam('Liverpool');
-    expect(latestNews.isDisplayed()).toBe(true);
+    expect(latestNews.isDisplayed()).toBe(true, 'Searching latest news by Liverpool failed');
   });
 
-  it('should search latest news', () => {
+  it('should check popular pages', () => {
     const popularPage = element(by.className('col-24 text-gray-dark'));
-    expect(popularPage.getText()).toEqual('Popular Pages');
+    expect(popularPage.getText()).toEqual('Popular Pages', 'Show popular pages failed');
   });
 });
 
@@ -60,14 +60,8 @@ describe('champions league page', () => {
     browser.get(championsLeaguePage);
   });
 
-  it('should get current title', () => {
-    expect(browser.getTitle()).toContain('Champions League - Onefootball');
-  });
-
-  it('should get current result of match', () => {
-    const result = element(by.css('span.flex-grow-0'));
-    browser.get(matchesChampionsLeaguePage);
-    expect(result.getText()).toEqual(':');
+  it('should check current title', () => {
+    expect(browser.getTitle()).toContain('Champions League - Onefootball', 'Incorrect title');
   });
 });
 
@@ -77,19 +71,19 @@ describe('Matches champions league page', () => {
     browser.get(matchesChampionsLeaguePage);
   });
 
-  it('should get current result of match', () => {
+  it('should check current result of match', () => {
     const result = element(by.css('span.flex-grow-0'));
-    expect(result.getText()).toEqual(':');
+    expect(result.getText()).toEqual(':', 'Incorrect result of match');
   });
 
-  it('should get a table with the match participants', () => {
-    const lastMatch = element(by.className('match-card d-flex flex-column w-100 justify-content-start align-items-top'));
+  it('should check the table with the match participants', () => {
+    const lastMatch = element(by.className('match-card d-flex'));
     lastMatch.click();
     browser.wait(() => {
-      return browser.isElementPresent(by.className('h4 text-uppercase text-center text-lg-left mb-xlg mt-none'));
+      return browser.isElementPresent(by.className('h4 text-uppercase text-center'));
     }, 5000);
-    const table = element(by.className('h4 text-uppercase text-center text-lg-left mb-xlg mt-none'));
-    expect(table.getText()).toContain('table');
+    const table = element(by.className('h4 text-uppercase text-center'));
+    expect(table.getText()).toContain('table', 'Incorrect table');
   });
 });
 
@@ -99,14 +93,14 @@ describe('Table champions league page', () => {
     browser.get(tableChampionsLeaguePage);
   });
 
-  it('should get current table', () => {
+  it('should check the current table', () => {
     const result = element(by.className('h2 p-0 mb-lg'));
-    expect(result.getText()).toEqual('Table');
+    expect(result.getText()).toEqual('Table', 'Incorrect table');
   });
 
-  it('should get counts of tables', () => {
-    const count = element.all(by.css('li.d-block.pt-0.pb-0.mb-0.mt-0.flex-grow-1'));
-    expect(count.count()).toBe(8);
+  it('should check counts of tables', () => {
+    const count = element.all(by.css('li[class*="d-block pt"]'));
+    expect(count.count()).toBe(8, 'Incorrect counts of tables');
   });
 });
 // non-angular https://kinogo.by/
@@ -117,19 +111,19 @@ describe('Kinogo page', () => {
     browser.get(kinogo);
   });
 
-  it('should log in', () => {
+  it('should check log in', () => {
     element(by.linkText('Вход')).click();
     element(by.id('login_name')).sendKeys('eugene89');
     element(by.id('login_password')).sendKeys('eugene89');
     element(by.css('button[title="Войти"]')).click();
     const login = element(by.id('logbtn'));
-    expect(login.getText()).toEqual('eugene89');
+    expect(login.getText()).toEqual('eugene89', 'Log in failed');
   });
 
-  it('should get title by searching movies', () => {
-    element(by.id('story')).sendKeys('Во все тяжкие');
+  it('should check getting title by searching movies', () => {
+    element(by.id('story')).sendKeys('Во все тяжкие (1-5 сезон)');
     element(by.css('button.fbutton2')).click();
-    const title = element(by.css('h2.zagolovki'));
-    expect(title.getText()).toContain('Во все тяжкие');
+    const title = element.all(by.css('h2.zagolovki'));
+    expect(title.getText()).toContain('Во все тяжкие (1-5 сезон)', 'Incorrect searching by title');
   });
 });
