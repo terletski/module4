@@ -104,7 +104,7 @@ describe('Table champions league page', () => {
     expect(count.count()).toBe(8, 'Incorrect counts of tables');
   });
 });
-non - angular https://kinogo.by/
+// non - angular https://kinogo.by/
 describe('Kinogo page', () => {
 
   beforeEach(() => {
