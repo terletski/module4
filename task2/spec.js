@@ -9,8 +9,8 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 describe('home page', () => {
   const switchLanguageMenu = element(by.css('span[class*="market"]'));
   const languageDe = element(by.css('img[alt="de"]'));
-  const searchForm = element(by.className('header-search-input flex'));
-  const searchButton = element(by.className('button[class*="header-search"]'));
+  const searchForm = element(by.css('input[class*="header-search"]'));
+  const searchButton = element(by.css('button[class*="header-search"]'));
 
   switchLanguage = () => {
     switchLanguageMenu.click();
@@ -43,7 +43,7 @@ describe('home page', () => {
   });
 
   it('should check to search latest news', () => {
-    const latestNews = element(by.className('a[class*="of"]'));
+    const latestNews = element(by.css('a[class*="of"]'));
     searchLatestNewshByTeam('Liverpool');
     expect(latestNews.isDisplayed()).toBe(true, 'Searching latest news by Liverpool failed');
   });
