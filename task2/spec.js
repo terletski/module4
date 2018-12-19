@@ -77,13 +77,13 @@ describe('Matches champions league page', () => {
   });
 
   it('should check the table with the match participants', () => {
+    const until = protractor.ExpectedConditions;
+    const table = element(by.className('h4 text-uppercase text-center'));
     browser.executeScript(`
     element = document.querySelector('.d-block.text-gray-darker');
     element.click();
     `);
-    const until = protractor.ExpectedConditions;
     browser.wait(until.urlContains('period'), 5000);
-    const table = element(by.className('h4 text-uppercase text-center'));
     expect(table.getText()).toContain('table', 'Incorrect table');
   });
 });

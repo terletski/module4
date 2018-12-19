@@ -1,6 +1,5 @@
 const webdriver = require('./webdriver_async');
 const chai = require('chai');
-chai.use(require('chai-as-promised'));
 const expect = chai.expect;
 
 describe('Test KinoGo.by', () => {
